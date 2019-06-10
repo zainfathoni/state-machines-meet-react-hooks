@@ -9,35 +9,89 @@ You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](h
 
 <CodeSurferLayout>
 
-```js title="This is a title"
-function hello(name) {
-  console.log('hello ' + name)
-}
+```js 1:3,5 title="A simple toggle machine example"
+import { Machine } from 'xstate'
 
-hello('world')
+const toggleMachine = Machine({
+  //
+})
 ```
 
-```js 1:3 subtitle="This is a subtitle"
-function hello(name) {
-  console.log('hello ' + name)
-}
+```js 4:4 subtitle="Initial state"
+import { Machine } from 'xstate'
 
-hello('world')
+const toggleMachine = Machine({
+  initial: 'inactive',
+})
 ```
 
-```js subtitle="New code is highlighted by default"
-function helloFactory() {
-  return name => {
-    console.log('hello ' + name)
-  }
-}
+```js 5:6,8:9,11 subtitle="States"
+import { Machine } from 'xstate'
 
-function hello(name) {
-  console.log('hello ' + name)
-}
-
-hello('world')
+const toggleMachine = Machine({
+  initial: 'inactive',
+  states: {
+    inactive: {
+      //
+    },
+    active: {
+      //
+    },
+  },
+})
 ```
+
+```js 7:9,12:14 subtitle="Events"
+import { Machine } from 'xstate'
+
+const toggleMachine = Machine({
+  initial: 'inactive',
+  states: {
+    inactive: {
+      on: {
+        TOGGLE: 'active',
+      },
+    },
+    active: {
+      on: {
+        TOGGLE: 'inactive',
+      },
+    },
+  },
+})
+```
+
+```js 3:17 subtitle="Copy these lines"
+import { Machine } from 'xstate'
+
+const toggleMachine = Machine({
+  initial: 'inactive',
+  states: {
+    inactive: {
+      on: {
+        TOGGLE: 'active',
+      },
+    },
+    active: {
+      on: {
+        TOGGLE: 'inactive',
+      },
+    },
+  },
+})
+```
+
+</CodeSurferLayout>
+
+---
+
+# Visualizer
+
+Paste to the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/">XState visualizer</a>
+
+---
+
+<CodeSurferLayout>
 
 ```js subtitle="Adding more code so I can show you how the zoom works"
 function helloFactoryBuilder() {
