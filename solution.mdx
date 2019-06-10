@@ -1,0 +1,75 @@
+import { CodeSurferLayout } from 'code-surfer'
+
+<CodeSurferLayout>
+
+```js 3 title="Let's build the Modal Machine"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  //
+})
+```
+
+```js 4:6,8:9,11 subtitle="We have 2 states: invisible & visible"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      //
+    },
+    visible: {
+      //
+    },
+  },
+})
+```
+
+```js 7:9,12:14 subtitle="We have 2 events: OPEN & CLOSE"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
+```
+
+```js 3:17 subtitle="Copy these lines"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
+```
+
+</CodeSurferLayout>
+
+---
+
+# Visualize
+
+Verify again in the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/">XState visualizer</a>
