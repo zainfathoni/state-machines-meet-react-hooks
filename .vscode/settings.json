@@ -1,0 +1,4 @@
+{
+  "prettier.printWidth": 80,
+  "prettier.trailingComma": "es5"
+}
