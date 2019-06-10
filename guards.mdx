@@ -1,3 +1,313 @@
+import { CodeSurferLayout } from 'code-surfer'
+
 # Any missing transition?
 
 How do we reach the `create` state?
+
+---
+
+<CodeSurferLayout>
+
+```js 9 title="Guards" subtitle="as a conditional state transition"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'list',
+      states: {
+        list: {
+          on: {
+            VIEW: 'view',
+          },
+        },
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```js 9 subtitle="this is identical to the previous one"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: { target: 'visible' },
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'list',
+      states: {
+        list: {
+          on: {
+            VIEW: 'view',
+          },
+        },
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```js 9:12 subtitle="this is also identical"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          // ⚠️ an array here
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'list',
+      states: {
+        list: {
+          on: {
+            VIEW: 'view',
+          },
+        },
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```js 11,14 subtitle="The same event needs to target different states"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'list',
+      states: {
+        list: {
+          on: {
+            VIEW: 'view',
+          },
+        },
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```js 11:12 subtitle="Target different states conditionally"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            cond: (context, event) =>
+              !event.data || (event.data && event.data.length === 0),
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'list',
+      states: {
+        list: {
+          on: {
+            VIEW: 'view',
+          },
+        },
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```js 3:48 subtitle="Visualize again"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            cond: (context, event) =>
+              !event.data || (event.data && event.data.length === 0),
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'list',
+      states: {
+        list: {
+          on: {
+            VIEW: 'view',
+          },
+        },
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+</CodeSurferLayout>
+
+---
+
+# Visualize
+
+Verify again in the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/">XState visualizer</a>
+
+Try sending these events:
+
+```js
+{type: "OPEN", data: []}
+```
+
+```js
+{type: "OPEN", data: ['', '']}
+```
