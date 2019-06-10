@@ -58,7 +58,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 18:20,23:25 subtitle="Inner events of the 'visible' state"
+```js 18:20,23:26 subtitle="Inner events of the 'visible' state"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -83,6 +83,7 @@ const modalMachine = Machine({
         view: {
           on: {
             EDIT: 'edit',
+            BACK: 'list',
           },
         },
         edit: {
@@ -97,7 +98,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 7,29:31,34:36 subtitle="Referencing external state by #id"
+```js 7,30:32,35:37 subtitle="Referencing external state by #id"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -123,6 +124,7 @@ const modalMachine = Machine({
         view: {
           on: {
             EDIT: 'edit',
+            BACK: 'list',
           },
         },
         edit: {
@@ -167,6 +169,7 @@ const modalMachine = Machine({
         view: {
           on: {
             EDIT: 'edit',
+            BACK: 'list',
           },
         },
         edit: {
