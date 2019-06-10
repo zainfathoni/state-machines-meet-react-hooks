@@ -85,7 +85,7 @@ const toggleMachine = Machine({
 
 ---
 
-# Visualizer
+# Visualize
 
 Paste to the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/">XState visualizer</a>
 
@@ -93,56 +93,74 @@ Paste to the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/
 
 <CodeSurferLayout>
 
-```js subtitle="Adding more code so I can show you how the zoom works"
-function helloFactoryBuilder() {
-  return () => () => name => {
-    console.log('hello ' + name)
-  }
-}
+```js 3 title="Let's build the Modal Machine"
+import { Machine } from 'xstate'
 
-function helloBuilder() {
-  return name => {
-    console.log('hello ' + name)
-  }
-}
-
-function helloFactory() {
-  return name => {
-    console.log('hello ' + name)
-  }
-}
-
-function hello(name) {
-  console.log('hello ' + name)
-}
-
-hello('world')
+const modalMachine = Machine({
+  //
+})
 ```
 
-```js 1:23
-function helloFactoryBuilder() {
-  return () => () => name => {
-    console.log('hello ' + name)
-  }
-}
+```js 4:6,8:9,11 subtitle="We have 2 states: invisible & visible"
+import { Machine } from 'xstate'
 
-function helloBuilder() {
-  return name => {
-    console.log('hello ' + name)
-  }
-}
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      //
+    },
+    visible: {
+      //
+    },
+  },
+})
+```
 
-function helloFactory() {
-  return name => {
-    console.log('hello ' + name)
-  }
-}
+```js 7:9,12:14 subtitle="We have 2 events: OPEN & CLOSE"
+import { Machine } from 'xstate'
 
-function hello(name) {
-  console.log('hello ' + name)
-}
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
+```
 
-hello('world')
+```js 3:17 subtitle="Copy these lines"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
 ```
 
 </CodeSurferLayout>
+
+---
+
+# Visualize
+
+Verify again in the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/">XState visualizer</a>
