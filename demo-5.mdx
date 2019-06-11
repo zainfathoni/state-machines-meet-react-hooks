@@ -1,0 +1,237 @@
+import { App } from './demo-5/App.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+<CodeSurferLayout>
+
+```jsx title="Implement Modal states" subtitle="Using the Hierarchical State"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => send('OPEN')
+  const handleClose = () => send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 11:14 title="Implement Modal states" subtitle="Define event handlers"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => send('OPEN')
+  const handleClose = () => send('CLOSE')
+  const handleView = () => send('VIEW')
+  const handleEdit = () => send('EDIT')
+  const handleBack = () => send('BACK')
+  const handleSubmit = () => send('SUBMIT')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 21 title="Implement Modal states" subtitle="Pass down the value of 'visible' inner state"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => send('OPEN')
+  const handleClose = () => send('CLOSE')
+  const handleView = () => send('VIEW')
+  const handleEdit = () => send('EDIT')
+  const handleBack = () => send('BACK')
+  const handleSubmit = () => send('SUBMIT')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal
+        onCancel={handleClose}
+        stateValue={current.value.visible}
+        //
+      />
+    </main>
+  )
+}
+```
+
+```jsx 22:25 title="Implement Modal states" subtitle="Pass down the event handlers"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => send('OPEN')
+  const handleClose = () => send('CLOSE')
+  const handleView = () => send('VIEW')
+  const handleEdit = () => send('EDIT')
+  const handleBack = () => send('BACK')
+  const handleSubmit = () => send('SUBMIT')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal
+        onCancel={handleClose}
+        stateValue={current.value.visible}
+        onView={handleView}
+        onEdit={handleEdit}
+        onBack={handleBack}
+        onSubmit={handleSubmit}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<CodeSurferLayout>
+
+```jsx 48 title="Implement Modal states" subtitle="Render Modal conditionally"
+import { Button as AntButton, List, Modal as AntModal } from 'antd'
+import React from 'react'
+
+export const Button = props => <AntButton size="large" {...props} />
+
+const PrimaryButton = props => <AntButton type="primary" {...props} />
+
+const ListView = ({ onView }) => (
+  <List>
+    <List.Item>
+      <AntButton onClick={onView}>Item 1</AntButton>
+    </List.Item>
+    <List.Item>
+      <AntButton onClick={onView}>Item 2</AntButton>
+    </List.Item>
+    <List.Item>
+      <AntButton onClick={onView}>Item 3</AntButton>
+    </List.Item>
+  </List>
+)
+
+const DetailView = ({ onBack, onEdit }) => (
+  <>
+    <AntButton onClick={onBack}>Back</AntButton>&nbsp;
+    <PrimaryButton onClick={onEdit}>Edit</PrimaryButton>
+  </>
+)
+
+const DetailEdit = ({ onSubmit }) => (
+  <PrimaryButton onClick={onSubmit}>Submit</PrimaryButton>
+)
+
+export const Modal = ({
+  onBack,
+  onEdit,
+  onView,
+  onSubmit,
+  stateValue,
+  ...props
+}) => (
+  <AntModal
+    centered
+    footer={null}
+    title={stateValue}
+    visible={!!stateValue}
+    {...props}
+  >
+    Modal Content
+  </AntModal>
+)
+```
+
+```jsx 48:56 title="Implement Modal states" subtitle="Render Modal conditionally"
+import { Button as AntButton, List, Modal as AntModal } from 'antd'
+import React from 'react'
+
+export const Button = props => <AntButton size="large" {...props} />
+
+const PrimaryButton = props => <AntButton type="primary" {...props} />
+
+const ListView = ({ onView }) => (
+  <List>
+    <List.Item>
+      <AntButton onClick={onView}>Item 1</AntButton>
+    </List.Item>
+    <List.Item>
+      <AntButton onClick={onView}>Item 2</AntButton>
+    </List.Item>
+    <List.Item>
+      <AntButton onClick={onView}>Item 3</AntButton>
+    </List.Item>
+  </List>
+)
+
+const DetailView = ({ onBack, onEdit }) => (
+  <>
+    <AntButton onClick={onBack}>Back</AntButton>&nbsp;
+    <PrimaryButton onClick={onEdit}>Edit</PrimaryButton>
+  </>
+)
+
+const DetailEdit = ({ onSubmit }) => (
+  <PrimaryButton onClick={onSubmit}>Submit</PrimaryButton>
+)
+
+export const Modal = ({
+  onBack,
+  onEdit,
+  onView,
+  onSubmit,
+  stateValue,
+  ...props
+}) => (
+  <AntModal
+    centered
+    footer={null}
+    title={stateValue}
+    visible={!!stateValue}
+    {...props}
+  >
+    {stateValue === 'list' ? (
+      <ListView onView={onView} />
+    ) : stateValue === 'view' ? (
+      <DetailView onBack={onBack} onEdit={onEdit} />
+    ) : stateValue === 'edit' ? (
+      <DetailEdit onSubmit={onSubmit} />
+    ) : stateValue === 'create' ? (
+      <DetailEdit onSubmit={onSubmit} />
+    ) : null}
+  </AntModal>
+)
+```
+
+</CodeSurferLayout>
+
+---
+
+<App />
