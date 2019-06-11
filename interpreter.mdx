@@ -1,0 +1,70 @@
+import { CodeSurferLayout } from 'code-surfer'
+
+# State Machine [Interpreter](https://xstate.js.org/docs/guides/interpretation.html#interpreter)
+
+- State machines are just pure functions (stateless)
+- Interpreter is where the `state` is managed
+
+---
+
+<CodeSurferLayout>
+
+```js title="XState Interpreter API"
+import { Machine, interpret } from 'xstate'
+
+const machine = Machine(/* machine config */)
+```
+
+```js 5:7 title="XState Interpreter API" subtitle="Interpret the machine, and add a listener for whenever a transition occurs."
+import { Machine, interpret } from 'xstate'
+
+const machine = Machine(/* machine config */)
+
+const service = interpret(machine).onTransition(state => {
+  console.log(state.value)
+})
+```
+
+```js 9 title="XState Interpreter API" subtitle="Start the service"
+import { Machine, interpret } from 'xstate'
+
+const machine = Machine(/* machine config */)
+
+const service = interpret(machine).onTransition(state => {
+  console.log(state.value)
+})
+
+service.start()
+```
+
+```js 11 title="XState Interpreter API" subtitle="Send events"
+import { Machine, interpret } from 'xstate'
+
+const machine = Machine(/* machine config */)
+
+const service = interpret(machine).onTransition(state => {
+  console.log(state.value)
+})
+
+service.start()
+
+service.send('SOME_EVENT')
+```
+
+```js 13 title="XState Interpreter API" subtitle="Stop the service"
+import { Machine, interpret } from 'xstate'
+
+const machine = Machine(/* machine config */)
+
+const service = interpret(machine).onTransition(state => {
+  console.log(state.value)
+})
+
+service.start()
+
+service.send('SOME_EVENT')
+
+service.stop()
+```
+
+</CodeSurferLayout>
