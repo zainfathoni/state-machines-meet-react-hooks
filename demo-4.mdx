@@ -1,0 +1,137 @@
+import { App } from './demo-4/App.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+<CodeSurferLayout>
+
+```jsx 7:29 title="useMachine hook" subtitle="Replace the extracted chunk of code with the custom hook"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine, {
+      devTools: true,
+    }).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 7 title="useMachine hook" subtitle="🎉"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 1,4 title="useMachine hook" subtitle="Refactor import statements accordingly"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 9:10 title="useMachine hook" subtitle="Refactor send event"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => send('OPEN')
+  const handleClose = () => send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 7:17 title="useMachine hook" subtitle="That's it, now we're ready to add more features! 😎"
+import React from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { useMachine } from './useMachine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  const handleOpen = () => send('OPEN')
+  const handleClose = () => send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<App />
