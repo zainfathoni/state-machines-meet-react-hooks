@@ -3,15 +3,16 @@ import { Button, Modal } from './Components'
 import { modalMachine } from './machine'
 
 export const App = () => {
-  const [state, setState] = useState(modalMachine.initialState)
+  const [current, setCurrent] = useState(modalMachine.initialState)
 
-  const handleOpen = () => setState(modalMachine.transition(state, 'OPEN'))
-  const handleClose = () => setState(modalMachine.transition(state, 'CLOSE'))
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
 
   return (
     <main class="app">
       <Button onClick={handleOpen}>Open Modal</Button>
-      <Modal onCancel={handleClose} visible={state.matches('visible')} />
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
     </main>
   )
 }
