@@ -7,12 +7,13 @@
     "test": "echo \"there are no tests\""
   },
   "devDependencies": {
-    "mdx-deck": "2.3.2",
-    "code-surfer": "2.0.0-alpha.4"
+    "code-surfer": "2.0.0-alpha.4",
+    "file-loader": "4.0.0",
+    "mdx-deck": "2.3.2"
   },
   "name": "state-machines-meet-react-hooks",
   "dependencies": {
-    "antd": "^3.19.3",
-    "xstate": "^4.6.1"
+    "antd": "3.19.3",
+    "xstate": "4.6.1"
   }
 }
