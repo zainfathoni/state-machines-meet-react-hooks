@@ -17,13 +17,33 @@ const modalMachine = Machine({
       on: {
         CLOSE: 'invisible',
       },
-      // TODO: Inner State of the 'visible' state
     },
   },
 })
 ```
 
-```js 15,17,20,23,26 subtitle="Inner states of the 'visible' state"
+```js 15 title="Hierarchical State" subtitle="Define Inner States of the 'visible' state"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine({
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      // TODO: Inner States of the 'visible' state
+    },
+  },
+})
+```
+
+```js 15,17,20,23,26 title="Hierarchical State" subtitle="Inner states of the 'visible' state"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -58,7 +78,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 18:20,23:26 subtitle="Inner events of the 'visible' state"
+```js 18:20,23:26 title="Hierarchical State" subtitle="Inner events of the 'visible' state"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -98,7 +118,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 7,30:32,35:37 subtitle="Referencing external state by #id"
+```js 7,30:32,35:37 title="Hierarchical State" subtitle="Referencing external state by #id"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -143,7 +163,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 3:41 subtitle="Visualize again"
+```js 3:42 title="Hierarchical State" subtitle="How does it look like on the state diagram?"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({

@@ -1,0 +1,192 @@
+import { CodeSurferLayout } from 'code-surfer'
+
+# Extracting into a Custom Hook
+
+Let's call it a `useMachine` hook
+
+---
+
+<CodeSurferLayout>
+
+```jsx title="Extracting into useMachine" subtitle="This is our simple app so far"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine, {
+      devTools: true,
+    }).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 7:29 title="Extracting into useMachine" subtitle="This chunk of code can be extracted out"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine, {
+      devTools: true,
+    }).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 1:4 title="Extracting into useMachine" subtitle="Accept machine & options params"
+import { useState, useRef, useEffect } from 'react'
+import { interpret } from 'xstate'
+
+export function useMachine(machine, options) {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine, {
+      devTools: true,
+    }).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  return [current, service.send]
+}
+```
+
+```jsx 5,10 title="Extracting into useMachine" subtitle="Rename arguments accordingly"
+import { useState, useRef, useEffect } from 'react'
+import { interpret } from 'xstate'
+
+export function useMachine(machine, options) {
+  const [current, setCurrent] = useState(machine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(machine, options).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  return [current, service.send]
+}
+```
+
+```jsx 27 title="Extracting into useMachine" subtitle="Return current machine state & the send function"
+import { useState, useRef, useEffect } from 'react'
+import { interpret } from 'xstate'
+
+export function useMachine(machine, options) {
+  const [current, setCurrent] = useState(machine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(machine, options).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  return [current, service.send]
+}
+```
+
+</CodeSurferLayout>

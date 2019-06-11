@@ -12,7 +12,7 @@ That event should automatically show a single view instead of list
 
 <CodeSurferLayout>
 
-```js 17 subtitle="Add another target"
+```js 17 title="Guards" subtitle="Add another target"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -68,7 +68,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 16 subtitle="Add another guard"
+```js 16 title="Guards" subtitle="Add another guard"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -130,7 +130,7 @@ const modalMachine = Machine({
 
 <CodeSurferLayout>
 
-```js 11:20 title="Increase Machine readability"
+```js 11:20 title="Guards" subtitle="We need to increase the machine definition readability"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine(
@@ -191,7 +191,7 @@ const modalMachine = Machine(
 )
 ```
 
-```js 55:60 subtitle="Guards can be aliased"
+```js 55:61 title="Guards" subtitle="Guards can be aliased by passing them into the second argument"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine(
@@ -256,7 +256,72 @@ const modalMachine = Machine(
 )
 ```
 
-```js 12,16 subtitle="Now the guards are semantically aliased"
+```js 57,59 title="Guards" subtitle="We have empty & single guards here"
+import { Machine } from 'xstate'
+
+const modalMachine = Machine(
+  {
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: (context, event) =>
+                !event.data || (event.data && event.data.length === 0),
+              target: 'visible.create',
+            },
+            {
+              cond: (context, event) => event.data && event.data.length === 1,
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'list',
+        states: {
+          list: {
+            on: {
+              VIEW: 'view',
+            },
+          },
+          view: {
+            on: {
+              EDIT: 'edit',
+              BACK: 'list',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    guards: {
+      empty: (context, event) =>
+        !event.data || (event.data && event.data.length === 0),
+      single: (context, event) => event.data && event.data.length === 1,
+    },
+  }
+)
+```
+
+```js 12,16 title="Guards" subtitle="Now the guards are semantically aliased"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine(
@@ -320,7 +385,7 @@ const modalMachine = Machine(
 )
 ```
 
-```js 3:61 subtitle="Visualize again"
+```js 3:61 title="Guards" subtitle="Visualize again"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine(
@@ -392,7 +457,7 @@ const modalMachine = Machine(
 
 Verify again in the <a target="\_blank" href="https://statecharts.github.io/xstate-viz/">XState visualizer</a>
 
-This event now should lead to `view` state:
+This event now should lead to the `view` state instead:
 
 ```js
 {type: "OPEN", data: ['']}

@@ -1,0 +1,314 @@
+import { App } from './demo-3/App.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+<CodeSurferLayout>
+
+```jsx 6 title="Using Interpreter" subtitle="We're keeping track of the current machine state already"
+import React, { useState } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 8 title="Using Interpreter" subtitle="Reference the service"
+import React, { useState, useRef } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 4,11:12,14:15 title="Using Interpreter" subtitle="Create the service only once"
+import React, { useState, useRef } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine).onTransition(state => {
+      //
+    })
+  }
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 13:15 title="Using Interpreter" subtitle="Update the current machine state when a transition occurs"
+import React, { useState, useRef } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 19 title="Using Interpreter" subtitle="Get the current serviceRef"
+import React, { useState, useRef } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 21:23 title="Using Interpreter" subtitle="Start the service when the component mounts"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+  }, [])
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 24:26 title="Using Interpreter" subtitle="Stop the service when the component unmounts"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 29:30 title="Using Interpreter" subtitle="Use the service to send events"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+```jsx 12:14 title="Using Interpreter" subtitle="Bonus: Redux Dev Tools integration"
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+import { interpret } from 'xstate'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const serviceRef = useRef(null)
+
+  if (serviceRef.current === null) {
+    serviceRef.current = interpret(modalMachine, {
+      devTools: true,
+    }).onTransition(state => {
+      if (state.changed) {
+        setCurrent(state)
+      }
+    })
+  }
+
+  const service = serviceRef.current
+
+  useEffect(() => {
+    service.start()
+
+    return () => {
+      service.stop()
+    }
+  }, [])
+
+  const handleOpen = () => service.send('OPEN')
+  const handleClose = () => service.send('CLOSE')
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<App />

@@ -1,0 +1,50 @@
+import { App } from './demo-2/App.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+<CodeSurferLayout>
+
+```jsx 5,7:8,13 title="Modal Visibility Toggle" subtitle="useState hook conventional usage"
+import React, { useState } from 'react'
+import { Button, Modal } from './Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+
+  const handleOpen = () => setVisible(true)
+  const handleClose = () => setVisible(false)
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={visible} />
+    </main>
+  )
+}
+```
+
+```jsx 3,6,8:10,15 title="Modal Visibility Toggle" subtitle="useState hook with state machine"
+import React, { useState } from 'react'
+import { Button, Modal } from './Components'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, setCurrent] = useState(modalMachine.initialState)
+
+  const handleOpen = () => setCurrent(modalMachine.transition(current, 'OPEN'))
+  const handleClose = () =>
+    setCurrent(modalMachine.transition(current, 'CLOSE'))
+
+  return (
+    <main class="app">
+      <Button onClick={handleOpen}>Open Modal</Button>
+      <Modal onCancel={handleClose} visible={current.matches('visible')} />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<App />

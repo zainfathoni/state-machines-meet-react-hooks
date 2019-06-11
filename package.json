@@ -10,5 +10,9 @@
     "mdx-deck": "2.3.2",
     "code-surfer": "2.0.0-alpha.4"
   },
-  "name": "state-machines-meet-react-hooks"
+  "name": "state-machines-meet-react-hooks",
+  "dependencies": {
+    "antd": "^3.19.3",
+    "xstate": "^4.6.1"
+  }
 }

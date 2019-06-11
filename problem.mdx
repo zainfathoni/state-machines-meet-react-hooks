@@ -8,7 +8,7 @@ You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](h
 
 <CodeSurferLayout>
 
-```js title="The conventional Modal implementation"
+```jsx title="The conventional Modal implementation"
 import { Modal } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { DeleteButton, EditButton } from './Button'
@@ -86,7 +86,7 @@ export const ReservationModal = ({
 }
 ```
 
-```js 28:30 subtitle="A bunch of computed state 😞"
+```jsx 28:30 subtitle="A bunch of computed state 😞"
 import { Modal } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { DeleteButton, EditButton } from './Button'
@@ -164,7 +164,7 @@ export const ReservationModal = ({
 }
 ```
 
-```js 48,57,64,66,68,70 subtitle="Implicit conditional rendering 😫"
+```jsx 48,57,64,66,68,70 subtitle="Implicit conditional rendering 😫"
 import { Modal } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { DeleteButton, EditButton } from './Button'

@@ -1,6 +1,17 @@
 import { CodeSurferLayout } from 'code-surfer'
+import { Image } from '@mdx-deck/components'
 
 # Any missing transition?
+
+<Image
+  src="images/how-do-we-reach-the-create-state.jpg"
+  alt="How do we reach the create state?"
+  style={{
+    margin: 'auto',
+    height: '50vh',
+    backgroundSize: 'contain',
+  }}
+/>
 
 How do we reach the `create` state?
 
@@ -53,7 +64,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 9 subtitle="this is identical to the previous one"
+```js 9 title="Guards" subtitle="this is identical to the previous one"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -98,7 +109,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 9:12 subtitle="this is also identical"
+```js 9:12 title="Guards" subtitle="this is also identical"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -146,7 +157,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 11,14 subtitle="The same event needs to target different states"
+```js 11,14 title="Guards" subtitle="The same event needs to target different states"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -196,7 +207,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 11:12 subtitle="Target different states conditionally"
+```js 11:12 title="Guards" subtitle="Target different states conditionally"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
@@ -248,7 +259,7 @@ const modalMachine = Machine({
 })
 ```
 
-```js 3:48 subtitle="Visualize again"
+```js 3:49 title="Guards" subtitle="Visualize again"
 import { Machine } from 'xstate'
 
 const modalMachine = Machine({
