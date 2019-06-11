@@ -12,6 +12,7 @@
   },
   "name": "state-machines-meet-react-hooks",
   "dependencies": {
-    "antd": "^3.19.3"
+    "antd": "^3.19.3",
+    "xstate": "^4.6.1"
   }
 }
