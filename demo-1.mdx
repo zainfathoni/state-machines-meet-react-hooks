@@ -1,0 +1,33 @@
+import { App } from './demo-1/App.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+# Demo 1
+
+## Initial App
+
+Modal Visibility Toggle
+
+---
+
+<CodeSurferLayout>
+
+```js 5,8:9 title="Using useState Hook"
+import React, { useState } from 'react'
+import { Button, Modal } from './Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  return (
+    <main class="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal onCancel={() => setVisible(false)} visible={visible} />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<App />
