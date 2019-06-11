@@ -13,6 +13,7 @@ import { slides as hierarchy } from './hierarchy.mdx'
 import { slides as interpreter } from './interpreter.mdx'
 import { slides as problem } from './problem.mdx'
 import { slides as solution } from './solution.mdx'
+import { slides as useMachine } from './use-machine.mdx'
 
 export const slides = [
   ...problem,
@@ -22,6 +23,7 @@ export const slides = [
   ...demo2,
   ...interpreter,
   ...demo3,
+  ...useMachine,
   ...hierarchy,
   ...guards,
   ...guards2,
