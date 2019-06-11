@@ -181,7 +181,7 @@ export const App = () => {
 }
 ```
 
-```jsx 23:25 title="Using Interpreter" subtitle="Stop the service when the component unmounts"
+```jsx 24:26 title="Using Interpreter" subtitle="Stop the service when the component unmounts"
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, Modal } from './Components'
 import { modalMachine } from './machine'
@@ -204,6 +204,7 @@ export const App = () => {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
@@ -222,7 +223,7 @@ export const App = () => {
 }
 ```
 
-```jsx 28:29 title="Using Interpreter" subtitle="Use the service to send events"
+```jsx 29:30 title="Using Interpreter" subtitle="Use the service to send events"
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, Modal } from './Components'
 import { modalMachine } from './machine'
@@ -245,6 +246,7 @@ export const App = () => {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
@@ -287,6 +289,7 @@ export const App = () => {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }

@@ -8,7 +8,7 @@ Let's call it a `useMachine` hook
 
 <CodeSurferLayout>
 
-```jsx title="Extracting into useMachine"
+```jsx title="Extracting into useMachine" subtitle="This is our simple app so far"
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, Modal } from './Components'
 import { modalMachine } from './machine'
@@ -33,6 +33,7 @@ export const App = () => {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
@@ -50,7 +51,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7:28 title="Extracting into useMachine" subtitle="This chunk of code can be extracted out"
+```jsx 7:29 title="Extracting into useMachine" subtitle="This chunk of code can be extracted out"
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, Modal } from './Components'
 import { modalMachine } from './machine'
@@ -75,6 +76,7 @@ export const App = () => {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
@@ -115,6 +117,7 @@ export function useMachine(machine, options) {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
@@ -129,7 +132,7 @@ import { useState, useRef, useEffect } from 'react'
 import { interpret } from 'xstate'
 
 export function useMachine(machine, options) {
-  const [current, setCurrent] = useState(machine)
+  const [current, setCurrent] = useState(machine.initialState)
 
   const serviceRef = useRef(null)
 
@@ -145,6 +148,7 @@ export function useMachine(machine, options) {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
@@ -154,12 +158,12 @@ export function useMachine(machine, options) {
 }
 ```
 
-```jsx 26 title="Extracting into useMachine" subtitle="Return current machine state & the send function"
+```jsx 27 title="Extracting into useMachine" subtitle="Return current machine state & the send function"
 import { useState, useRef, useEffect } from 'react'
 import { interpret } from 'xstate'
 
 export function useMachine(machine, options) {
-  const [current, setCurrent] = useState(machine)
+  const [current, setCurrent] = useState(machine.initialState)
 
   const serviceRef = useRef(null)
 
@@ -175,6 +179,7 @@ export function useMachine(machine, options) {
 
   useEffect(() => {
     service.start()
+
     return () => {
       service.stop()
     }
