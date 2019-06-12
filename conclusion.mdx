@@ -1,0 +1,89 @@
+import { Appear } from 'mdx-deck'
+
+# Advantages
+
+<ul>
+  <Appear>
+    <li>Now all states are visible!</li>
+    <li>Easier to test</li>
+    <li>All state transitions are well-tested</li>
+    <li>Is it bug free, as promised?</li>
+  </Appear>
+</ul>
+
+---
+
+# Caution!
+
+<ul>
+  <li>It's not completely bug free</li>
+  <Appear>
+    <li>
+      Remaining bugs due to discrepancies between the state & the rendered views
+    </li>
+    <li>For instance:</li>
+    <li>
+      We should have tested the rendered views from every particular states as
+      well
+    </li>
+    <li>Consider Integration Tests</li>
+  </Appear>
+</ul>
+
+---
+
+# Lessons Learned
+
+<ul>
+  <Appear>
+    <li>State Machines must be designed thoroughly</li>
+    <li>
+      Yes, it's easier to test the states, but don't forget to test the rendered
+      views!
+    </li>
+    <li>
+      There's no silver bullet: Just as other solutions out there, e.g.
+      <ul>
+        <li>
+          <a href="https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367">
+            You might not need Redux
+          </a>
+        </li>
+        <li>
+          <a href="https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html">
+            You Probably Don't Need Derived State
+          </a>
+        </li>
+        <li>
+          <strong>You might not need State Machines</strong>
+        </li>
+        <li>
+          <em>You might not need ... (fill in yourself)</em>
+        </li>
+      </ul>
+    </li>
+  </Appear>
+</ul>
+
+---
+
+# Key Takeaways
+
+<ul>
+  <Appear>
+    <li>Use State Machines sparingly</li>
+    <li>Isolate State management into Custom Hooks</li>
+    <li>Always test your code thoroughly</li>
+  </Appear>
+</ul>
+
+---
+
+# Further Reading
+
+- [xstate](https://xstate.js.org/docs/#why)
+- [Testing Trophy](https://kentcdodds.com/blog/write-tests) by Kent C. Dodds
+
+---
+
+# Thanks
