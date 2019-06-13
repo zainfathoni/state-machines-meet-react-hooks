@@ -283,73 +283,13 @@ Introducing **Guards**
 
 ---
 
-TODO:
-
----
-
 <CodeSurferLayout>
 
-```jsx 7:11,12:18 title="State Machine Definition ⚙️" subtitle="Introducing Hierarchical State"
+```jsx 5:30 title="State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
-  id: 'editView',
-  initial: 'invisible',
-  states: {
-    invisible: {
-      on: {
-        OPEN: 'visible',
-      },
-    },
-    visible: {
-      on: {
-        CLOSE: 'invisible',
-      },
-      // TODO: Add Hierarchical State
-    },
-  },
-})
-```
-
-```jsx 16:28 title="State Machine Definition ⚙️" subtitle="Add states inside 'visible' state"
-import { Machine } from 'xstate'
-
-export const modalMachine = Machine({
-  id: 'editView',
-  initial: 'invisible',
-  states: {
-    invisible: {
-      on: {
-        OPEN: 'visible',
-      },
-    },
-    visible: {
-      on: {
-        CLOSE: 'invisible',
-      },
-      initial: 'view',
-      states: {
-        view: {
-          on: {
-            EDIT: 'edit',
-          },
-        },
-        edit: {
-          on: {
-            SUBMIT: /* How to access parent state? */,
-          },
-        },
-      },
-    },
-  },
-})
-```
-
-```jsx 8,26 title="State Machine Definition ⚙️" subtitle="Target parent state by using #id"
-import { Machine } from 'xstate'
-
-export const modalMachine = Machine({
-  id: 'editView',
+  id: 'createView',
   initial: 'invisible',
   states: {
     invisible: {
@@ -380,11 +320,11 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 8,17:29 title="State Machine Definition ⚙️"
+```jsx 10 title="State Machine Definition ⚙️" subtitle="This is a transition"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
-  id: 'editView',
+  id: 'createView',
   initial: 'invisible',
   states: {
     invisible: {
@@ -405,6 +345,255 @@ export const modalMachine = Machine({
           },
         },
         edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 10 title="State Machine Definition ⚙️" subtitle="Transition can be defined as an object"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'createView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: { target: 'visible' },
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 10:13 title="State Machine Definition ⚙️" subtitle="as well as an array"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'createView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          // ⚠️ an array here
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 11:13 title="State Machine Definition ⚙️" subtitle="How do we target different states from a same event?"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'createView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 12:13 title="State Machine Definition ⚙️" subtitle="By providing a condition, it's called a Guard"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'createView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            cond: (context, event) =>
+              !event.data || (event.data && event.data.length === 0),
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 36:40 title="State Machine Definition ⚙️" subtitle="Define another 'create' state"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'createView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            cond: (context, event) =>
+              !event.data || (event.data && event.data.length === 0),
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 11:16,36:40 title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'createView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: [
+          {
+            cond: (context, event) =>
+              !event.data || (event.data && event.data.length === 0),
+            target: 'visible.create',
+          },
+          { target: 'visible' },
+        ],
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+        create: {
           on: {
             SUBMIT: '#invisible',
           },
@@ -422,7 +611,7 @@ export const modalMachine = Machine({
 # Visualization
 
 <Image
-  src={require('file-loader!./images/editView-state-machine.png')}
+  src={require('file-loader!./images/createView-state-machine.png')}
   style={{
     margin: 'auto',
     height: '50vh',
@@ -448,29 +637,8 @@ export const App = () => {
       <Button onClick={() => send('OPEN')}>Open Modal</Button>
       <Modal
         onClose={() => send('CLOSE')}
-        stateValue={current.value === 'visible'}
-      />
-    </main>
-  )
-}
-```
-
-```jsx 16 title="App with State Machine 🛠" subtitle="Pass down 'visible' substates as the stateValue"
-import React from 'react'
-import { Button, Modal } from '../shared/Components'
-import { useMachine } from '../shared/useMachine'
-import { modalMachine } from './machine'
-
-export const App = () => {
-  const [current, send] = useMachine(modalMachine, { devTools: true })
-
-  return (
-    <main className="app">
-      <Button onClick={() => send('OPEN')}>Open Modal</Button>
-      <Modal
-        onClose={() => send('CLOSE')}
-        onEdit={}
-        onSubmit={}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
         stateValue={current.value.visible}
       />
     </main>
@@ -478,7 +646,7 @@ export const App = () => {
 }
 ```
 
-```jsx 14:15 title="App with State Machine 🛠" subtitle="Simply send 'EDIT' & 'SUBMIT' events"
+```jsx 11 title="App with State Machine 🛠" subtitle="Let's rename the current button"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -489,7 +657,7 @@ export const App = () => {
 
   return (
     <main className="app">
-      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Button onClick={() => send('OPEN')}>Open Empty</Button>
       <Modal
         onClose={() => send('CLOSE')}
         onEdit={() => send('EDIT')}
@@ -501,7 +669,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7,14:15,16 title="App with State Machine 🛠"
+```jsx 11:13 title="App with State Machine 🛠" subtitle="Event can be defined as an object with a type and payloads"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -512,7 +680,65 @@ export const App = () => {
 
   return (
     <main className="app">
-      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:13 title="App with State Machine 🛠" subtitle="Add another button which sends the same event but different payloads"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:16 title="App with State Machine 🛠" subtitle="That's it!"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
       <Modal
         onClose={() => send('CLOSE')}
         onEdit={() => send('EDIT')}
