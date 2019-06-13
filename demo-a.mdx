@@ -14,23 +14,21 @@ import { CodeSurferLayout } from 'code-surfer'
 
 <CodeSurferLayout>
 
-```jsx 5,9:10 title="Toggle Modal Visibility 👀"
+```jsx title="Toggle Modal Visibility 👀"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
 export const App = () => {
-  const [visible, setVisible] = useState(false)
-
   return (
     <main className="app">
-      <Button onClick={() => setVisible(true)}>Open Modal</Button>
-      <Modal onClose={() => setVisible(false)} stateValue={visible} />
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
     </main>
   )
 }
 ```
 
-```jsx 5 title="Toggle Modal Visibility 👀" subtitle="useState visible"
+```jsx 5 title="Toggle Modal Visibility 👀" subtitle="Add 'visible' useState"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -39,8 +37,8 @@ export const App = () => {
 
   return (
     <main className="app">
-      <Button onClick={() => setVisible(true)}>Open Modal</Button>
-      <Modal onClose={() => setVisible(false)} stateValue={visible} />
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
     </main>
   )
 }
@@ -56,13 +54,29 @@ export const App = () => {
   return (
     <main className="app">
       <Button onClick={() => setVisible(true)}>Open Modal</Button>
-      <Modal onClose={() => setVisible(false)} stateValue={visible} />
+      <Modal onClose={} stateValue={} />
     </main>
   )
 }
 ```
 
 ```jsx 10 title="Toggle Modal Visibility 👀" subtitle="setVisible to false 🙈 on Modal close"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal onClose={() => setVisible(false)} stateValue={visible} />
+    </main>
+  )
+}
+```
+
+```jsx 5,9:10 title="Toggle Modal Visibility 👀"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -90,23 +104,13 @@ export const App = () => {
 
 <CodeSurferLayout>
 
-```jsx 5,7:11,12:17 title="State Machine Definition ⚙️"
+```jsx title="State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
   id: 'visibility',
-  initial: 'invisible',
   states: {
-    invisible: {
-      on: {
-        OPEN: 'visible',
-      },
-    },
-    visible: {
-      on: {
-        CLOSE: 'invisible',
-      },
-    },
+    //
   },
 })
 ```
@@ -118,16 +122,7 @@ export const modalMachine = Machine({
   id: 'visibility',
   initial: 'invisible',
   states: {
-    invisible: {
-      on: {
-        OPEN: 'visible',
-      },
-    },
-    visible: {
-      on: {
-        CLOSE: 'invisible',
-      },
-    },
+    //
   },
 })
 ```
@@ -142,11 +137,6 @@ export const modalMachine = Machine({
     invisible: {
       on: {
         OPEN: 'visible',
-      },
-    },
-    visible: {
-      on: {
-        CLOSE: 'invisible',
       },
     },
   },
@@ -174,28 +164,44 @@ export const modalMachine = Machine({
 })
 ```
 
+```jsx 5,7:11,12:17 title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'visibility',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
+```
+
 </CodeSurferLayout>
 
 ---
 
 <CodeSurferLayout>
 
-```jsx 7,11,13,14 title="App with State Machine 🛠"
+```jsx title="App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
 import { modalMachine } from './machine'
 
 export const App = () => {
-  const [current, send] = useMachine(modalMachine, { devTools: true })
-
   return (
     <main className="app">
-      <Button onClick={() => send('OPEN')}>Open Modal</Button>
-      <Modal
-        onClose={() => send('CLOSE')}
-        stateValue={current.value === 'visible'}
-      />
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
     </main>
   )
 }
@@ -212,11 +218,8 @@ export const App = () => {
 
   return (
     <main className="app">
-      <Button onClick={() => send('OPEN')}>Open Modal</Button>
-      <Modal
-        onClose={() => send('CLOSE')}
-        stateValue={current.value === 'visible'}
-      />
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
     </main>
   )
 }
@@ -234,10 +237,7 @@ export const App = () => {
   return (
     <main className="app">
       <Button onClick={() => send('OPEN')}>Open Modal</Button>
-      <Modal
-        onClose={() => send('CLOSE')}
-        stateValue={current.value === 'visible'}
-      />
+      <Modal onClose={} stateValue={} />
     </main>
   )
 }
@@ -257,7 +257,7 @@ export const App = () => {
       <Button onClick={() => send('OPEN')}>Open Modal</Button>
       <Modal
         onClose={() => send('CLOSE')}
-        stateValue={current.value === 'visible'}
+        stateValue={}
       />
     </main>
   )
@@ -265,6 +265,27 @@ export const App = () => {
 ```
 
 ```jsx 14 title="App with State Machine 🛠" subtitle="Pass down current state value as the visibility props"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        stateValue={current.value === 'visible'}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7,11,13,14 title="App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
