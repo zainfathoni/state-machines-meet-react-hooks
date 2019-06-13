@@ -1,0 +1,123 @@
+import { Appear, Image, Notes } from 'mdx-deck'
+
+# [State Machines](https://xstate.js.org/) Meet [React Hooks](https://reactjs.org/docs/hooks-intro.html)
+
+---
+
+# I am [Zain Fathoni](https://github.com/zainfathoni) 🤝
+
+<ul>
+  <Appear>
+    <li>Indonesian 🇮🇩 family with 2 kids 👨‍👩‍👧‍👦</li>
+    <li>
+      Working @ <a href="https://www.ninjavan.co">Ninja Van</a> Singapore 🇸🇬
+    </li>
+    <li>Backend turned Frontend 👨🏻‍💻</li>
+    <li>❤️ React & its Hooks ⚛️</li>
+    <li>
+      <a href="https://twitter.com/zainfathoni">@zainfathoni</a> on Twitter
+    </li>
+  </Appear>
+</ul>
+
+---
+
+# What this talk is 😄
+
+- A _very_ brief introduction to State Machines
+- A small replica of my personal journey with:
+  - State Machines, especially [xstate](https://xstate.js.org/) in particular
+  - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
+- **How** to combine them together
+
+---
+
+# What this talk is _not_ 😅
+
+<ul>
+  <Appear>
+    <li>An introduction to React Hooks</li>
+    <li>A deep dig down of State Machines concepts</li>
+  </Appear>
+</ul>
+
+<Notes>
+  <ul>
+    <li>
+      Let's assume that everybody here is familiar enough with React Hooks
+      <br />
+      Shawn Wang will also talk about it later today
+    </li>
+    <li>
+      State Machines concepts are <em>huge</em> and it won't fit in this 30
+      minutes talk
+    </li>
+  </ul>
+</Notes>
+
+---
+
+# Problem Statement
+
+<ul>
+  <Appear>
+    <li>Complex UI flows require multiple states</li>
+    <li>Multiple states are generally too implicit</li>
+    <li>Implicit codes are harder to reason about</li>
+    <li>Hidden bugs everywhere due to "invisible states"</li>
+  </Appear>
+</ul>
+
+---
+
+# What is State Machines?
+
+<ul>
+  <Appear>
+    <li>
+      <a
+        href="https://en.wikipedia.org/wiki/Finite-state_machine"
+        target="_blank"
+      >
+        Finite State Machines
+      </a>
+    </li>
+    <li>
+      <a href="https://xstate.js.org/docs/#why" target="_blank">
+        Why?
+      </a>
+      <ul>
+        <li>Predictable</li>
+        <li>
+          <a
+            href="http://slides.com/davidkhourshid/finite-state-machines#/22"
+            target="_blank"
+          >
+            Provide a common language for designers & developers.
+          </a>
+        </li>
+      </ul>
+    </li>
+  </Appear>
+</ul>
+
+---
+
+<Image src={require('file-loader!./images/designers-flow-diagram.png')} />
+
+---
+
+# Hypothesis
+
+<ul>
+  <Appear>
+    <li>State machines make all states are visible</li>
+    <li>No invisible states means no hidden bugs</li>
+  </Appear>
+</ul>
+
+---
+
+# Enough talk 🗣
+
+## Show me the code! 💻
