@@ -4,6 +4,7 @@ import './App.css'
 export { nightOwlFull as theme } from 'code-surfer/themes'
 
 import { slides as conclusion } from './conclusion.mdx'
+import { slides as demoA } from './demo-a.mdx'
 import { slides as demo1 } from './demo-1.mdx'
 import { slides as demo2 } from './demo-2.mdx'
 import { slides as demo3 } from './demo-3.mdx'
@@ -22,6 +23,7 @@ import { slides as useMachine } from './use-machine.mdx'
 export const slides = [
   ...introduction,
   ...toggle,
+  ...demoA,
   ...demo1,
   ...solution,
   ...demo2,
