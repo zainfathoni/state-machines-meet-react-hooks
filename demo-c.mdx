@@ -1,0 +1,531 @@
+import { Image } from '@mdx-deck/components'
+import { App } from './demo-c/App.js'
+import { App as AppWithMachine } from './demo-c/AppWithMachine.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+# Requirement 3️⃣
+
+## Add Create Screen 🆕
+
+Show `create` screen when opening modal with _empty_ data
+
+---
+
+<App />
+
+---
+
+<CodeSurferLayout>
+
+```jsx 6:31 title="Add Create Screen 🆕"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+
+  let stateValue
+  if (visible && !editing) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  }
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7 title="Add Create Screen 🆕" subtitle="Add 'data' useState"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+
+  let stateValue
+  if (visible && !editing) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  }
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 10,14:16 title="Add Create Screen 🆕" subtitle="Incorporate 'data' state into the stateValue determination"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+
+  let stateValue
+  if (visible && !editing && data && data.length > 0) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 20:29 title="Add Create Screen 🆕" subtitle="Update Buttons"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+
+  let stateValue
+  if (visible && !editing && data && data.length > 0) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      &nbsp;
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 34,40 title="Add Create Screen 🆕" subtitle="Update Event Propagations"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+
+  let stateValue
+  if (visible && !editing && data && data.length > 0) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      &nbsp;
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7,10,14:16,20:29,34,40 title="Add Create Screen 🆕"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+
+  let stateValue
+  if (visible && !editing && data && data.length > 0) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      &nbsp;
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+## Differentiate View & Edit Screens 📝
+
+### with State Machine
+
+Introducing **Guards**
+
+---
+
+TODO:
+
+---
+
+<CodeSurferLayout>
+
+```jsx 7:11,12:18 title="State Machine Definition ⚙️" subtitle="Introducing Hierarchical State"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'editView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      // TODO: Add Hierarchical State
+    },
+  },
+})
+```
+
+```jsx 16:28 title="State Machine Definition ⚙️" subtitle="Add states inside 'visible' state"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'editView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: /* How to access parent state? */,
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 8,26 title="State Machine Definition ⚙️" subtitle="Target parent state by using #id"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'editView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+```jsx 8,17:29 title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'editView',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      id: 'invisible',
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+      initial: 'view',
+      states: {
+        view: {
+          on: {
+            EDIT: 'edit',
+          },
+        },
+        edit: {
+          on: {
+            SUBMIT: '#invisible',
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+</CodeSurferLayout>
+
+---
+
+# Visualization
+
+<Image
+  src={require('file-loader!./images/editView-state-machine.png')}
+  style={{
+    margin: 'auto',
+    height: '50vh',
+    backgroundSize: 'contain',
+  }}
+/>
+
+---
+
+<CodeSurferLayout>
+
+```jsx title="App with State Machine 🛠"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        stateValue={current.value === 'visible'}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 16 title="App with State Machine 🛠" subtitle="Pass down 'visible' substates as the stateValue"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={}
+        onSubmit={}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 14:15 title="App with State Machine 🛠" subtitle="Simply send 'EDIT' & 'SUBMIT' events"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7,14:15,16 title="App with State Machine 🛠"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<AppWithMachine />
