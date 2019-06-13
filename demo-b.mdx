@@ -1,3 +1,4 @@
+import { Image } from '@mdx-deck/components'
 import { App } from './demo-b/App.js'
 import { App as AppWithMachine } from './demo-b/AppWithMachine.js'
 import { CodeSurferLayout } from 'code-surfer'
@@ -287,6 +288,19 @@ export const modalMachine = Machine({
 ```
 
 </CodeSurferLayout>
+
+---
+
+# Visualization
+
+<Image
+  src={require('file-loader!./images/editView-state-machine.png')}
+  style={{
+    margin: 'auto',
+    height: '50vh',
+    backgroundSize: 'contain',
+  }}
+/>
 
 ---
 
