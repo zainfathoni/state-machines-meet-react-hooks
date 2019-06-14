@@ -1,0 +1,327 @@
+import { Image } from '@mdx-deck/components'
+import { App } from './demo-a/App.js'
+import { App as AppWithMachine } from './demo-a/AppWithMachine.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+# Requirement 1️⃣
+
+## Toggle Modal Visibility 👀
+
+---
+
+<App />
+
+---
+
+<CodeSurferLayout>
+
+```jsx title="Toggle Modal Visibility 👀"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  return (
+    <main className="app">
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
+    </main>
+  )
+}
+```
+
+```jsx 5 title="Toggle Modal Visibility 👀" subtitle="Add 'visible' useState"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <main className="app">
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
+    </main>
+  )
+}
+```
+
+```jsx 9 title="Toggle Modal Visibility 👀" subtitle="setVisible 👀 on Button click"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
+    </main>
+  )
+}
+```
+
+```jsx 10 title="Toggle Modal Visibility 👀" subtitle="setVisible to false 🙈 on Modal close"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal onClose={() => setVisible(false)} stateValue={visible} />
+    </main>
+  )
+}
+```
+
+```jsx 5,9:10 title="Toggle Modal Visibility 👀"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+
+  return (
+    <main className="app">
+      <Button onClick={() => setVisible(true)}>Open Modal</Button>
+      <Modal onClose={() => setVisible(false)} stateValue={visible} />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+## Toggle Modal Visibility 👀
+
+### with State Machine
+
+---
+
+<CodeSurferLayout>
+
+```jsx title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'visibility',
+  states: {
+    //
+  },
+})
+```
+
+```jsx 5 title="State Machine Definition ⚙️" subtitle="inital 'invisible' 🙈 state"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'visibility',
+  initial: 'invisible',
+  states: {
+    //
+  },
+})
+```
+
+```jsx 7:11 title="State Machine Definition ⚙️" subtitle="'invisible' 🙈 state with 'OPEN' event"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'visibility',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+  },
+})
+```
+
+```jsx 12:16 title="State Machine Definition ⚙️" subtitle="'visible' 👀 state with 'CLOSE' event"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'visibility',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
+```
+
+```jsx 5,7:11,12:16 title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine({
+  id: 'visibility',
+  initial: 'invisible',
+  states: {
+    invisible: {
+      on: {
+        OPEN: 'visible',
+      },
+    },
+    visible: {
+      on: {
+        CLOSE: 'invisible',
+      },
+    },
+  },
+})
+```
+
+</CodeSurferLayout>
+
+---
+
+# Visualization
+
+<Image
+  src={require('file-loader!./images/visibility-state-machine.png')}
+  style={{
+    margin: 'auto',
+    height: '50vh',
+    backgroundSize: 'contain',
+  }}
+/>
+
+---
+
+<CodeSurferLayout>
+
+```jsx title="App with State Machine 🛠"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  return (
+    <main className="app">
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
+    </main>
+  )
+}
+```
+
+```jsx 7 title="App with State Machine 🛠" subtitle="useMachine with the modalMachine"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
+    </main>
+  )
+}
+```
+
+```jsx 11 title="App with State Machine 🛠" subtitle="send 'OPEN' event on Button click"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal onClose={} stateValue={} />
+    </main>
+  )
+}
+```
+
+```jsx 13 title="App with State Machine 🛠" subtitle="send 'CLOSE' event on Modal close"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        stateValue={}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 14 title="App with State Machine 🛠" subtitle="Pass down current state value as the visibility props"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        stateValue={current.value === 'visible'}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7,11,13,14 title="App with State Machine 🛠"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        stateValue={current.value === 'visible'}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<AppWithMachine />

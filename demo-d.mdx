@@ -1,0 +1,933 @@
+import { Image } from '@mdx-deck/components'
+import { App } from './demo-d/App.js'
+import { App as AppWithMachine } from './demo-d/AppWithMachine.js'
+import { CodeSurferLayout } from 'code-surfer'
+
+# Requirement 4️⃣
+
+## Add List Screen 🗒
+
+Show `list` screen when opening modal with _multiple_ data
+
+---
+
+<App />
+
+---
+
+<CodeSurferLayout>
+
+```jsx 7:44 title="Add List Screen 🗒"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+
+  let stateValue
+  if (visible && !editing && data && data.length > 0) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 8 title="Add List Screen 🗒" subtitle="Add 'index' useState"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 0) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:18 title="Add List Screen 🗒" subtitle="Incorporate 'index' state into the stateValue determination"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 28:35 title="Add List Screen 🗒" subtitle="Update Buttons"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 56,58:59 title="Add List Screen 🗒" subtitle="Update Event Propagations"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 8,11:18,29:36,56,58:59 title="Add List Screen 🗒"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+## Add List Screen 🗒
+
+### with State Machine
+
+Introducing **Guards Aliasing**
+
+---
+
+<CodeSurferLayout>
+
+```jsx 4:45 title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: (context, event) =>
+                !event.data || (event.data && event.data.length === 0),
+              target: 'visible.create',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  }
+  //
+)
+```
+
+```jsx 17:20 title="State Machine Definition ⚙️" subtitle="Add a new guard for single data"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: (context, event) =>
+                !event.data || (event.data && event.data.length === 0),
+              target: 'visible.create',
+            },
+            {
+              cond: (context, event) => event.data && event.data.length === 1
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  }
+  //
+)
+```
+
+```jsx 13:14,18 title="State Machine Definition ⚙️" subtitle="Now it gets harder to read"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: (context, event) =>
+                !event.data || (event.data && event.data.length === 0),
+              target: 'visible.create',
+            },
+            {
+              cond: (context, event) => event.data && event.data.length === 1
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  }
+  //
+)
+```
+
+```jsx 13,17 title="State Machine Definition ⚙️" subtitle="Alias the conditions to increase readability"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: 'empty',
+              target: 'visible.create',
+            },
+            {
+              cond: 'single'
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  }
+  //
+)
+```
+
+```jsx 49:55 title="State Machine Definition ⚙️" subtitle="Define the guards at the second argument"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: 'empty',
+              target: 'visible.create',
+            },
+            {
+              cond: 'single'
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    guards: {
+      empty: (context, event) =>
+        !event.data || (event.data && event.data.length === 0),
+      single: (context, event) => event.data && event.data.length === 1
+    }
+  }
+)
+```
+
+```jsx 28,30:34,38 title="State Machine Definition ⚙️" subtitle="Define another 'list' state"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: 'empty',
+              target: 'visible.create',
+            },
+            {
+              cond: 'single'
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'list',
+        states: {
+          list: {
+            on: {
+              VIEW: 'view'
+            }
+          },
+          view: {
+            on: {
+              EDIT: 'edit',
+              BACK: 'list'
+            }
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    guards: {
+      empty: (context, event) =>
+        !event.data || (event.data && event.data.length === 0),
+      single: (context, event) => event.data && event.data.length === 1
+    }
+  }
+)
+```
+
+```jsx 13,16:19,30:34,38,55:61 title="State Machine Definition ⚙️"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: 'empty',
+              target: 'visible.create',
+            },
+            {
+              cond: 'single',
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'list',
+        states: {
+          list: {
+            on: {
+              VIEW: 'view',
+            },
+          },
+          view: {
+            on: {
+              EDIT: 'edit',
+              BACK: 'list',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    guards: {
+      empty: (context, event) =>
+        !event.data || (event.data && event.data.length === 0),
+      single: (context, event) => event.data && event.data.length === 1,
+    },
+  }
+)
+```
+
+</CodeSurferLayout>
+
+---
+
+# Visualization
+
+<Image
+  src={require('file-loader!./images/listView-state-machine.png')}
+  style={{
+    margin: 'auto',
+    height: '70vh',
+    backgroundSize: 'contain',
+  }}
+/>
+
+---
+
+<CodeSurferLayout>
+
+```jsx title="App with State Machine 🛠"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:13 title="App with State Machine 🛠" subtitle="Add another button for multiple data"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: ['', ''] })}>
+        Open Multiple
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 24:25 title="App with State Machine 🛠" subtitle="Simply send 'BACK' & 'VIEW' events"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: ['', ''] })}>
+        Open Multiple
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        onBack={() => send('BACK')}
+        onView={() => send('VIEW')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:13,23:24 title="App with State Machine 🛠" subtitle="That's it!"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: ['', ''] })}>
+        Open Multiple
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        onBack={() => send('BACK')}
+        onView={() => send('VIEW')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<AppWithMachine />

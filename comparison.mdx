@@ -1,0 +1,435 @@
+import { Image } from '@mdx-deck/components'
+import { CodeSurferLayout } from 'code-surfer'
+
+# Comparison
+
+---
+
+<CodeSurferLayout>
+
+```jsx 1 title="App without State Machine"
+import React, { useState } from 'react'
+import { Button, Modal } from '../shared/Components'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 1,3:4 title="App" subtitle="Replace multiple useState with useMachine"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7:26 title="App" subtitle="Replace multiple useState with useMachine"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(-1)
+
+  let stateValue
+  if (visible && !editing && data && data.length > 1 && index < 0) {
+    stateValue = 'list'
+  } else if (
+    visible &&
+    !editing &&
+    data &&
+    ((data.length > 0 && index >= 0) || data.length === 1)
+  ) {
+    stateValue = 'view'
+  } else if (visible && editing) {
+    stateValue = 'edit'
+  } else if (visible && (!data || data.length === 0)) {
+    stateValue = 'create'
+  }
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 7 title="App" subtitle="Replace multiple useState with useMachine"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:44 title="App" subtitle="Replace multiple useState with useMachine"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:44 title="App" subtitle="Replace implicit setState calls into explicit events"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData(['', ''])
+        }}
+      >
+        Open Multiple
+      </Button>
+      <Button
+        onClick={() => {
+          setVisible(true)
+          setData([''])
+        }}
+      >
+        Open Exists
+      </Button>
+      <Button onClick={() => setVisible(true)}>Open Empty</Button>
+      <Modal
+        onClose={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+        }}
+        onEdit={() => setEditing(true)}
+        onSubmit={() => {
+          setVisible(false)
+          setEditing(false)
+          setData([])
+          setIndex(-1)
+        }}
+        onBack={() => setIndex(-1)}
+        onView={() => setIndex(0)}
+        stateValue={stateValue}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11:27 title="App" subtitle="Replace implicit setState calls into explicit events"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: ['', ''] })}>
+        Open Multiple
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        onBack={() => send('BACK')}
+        onView={() => send('VIEW')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 1,3:4,7,11:27 title="App with State Machine 🛠"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send({ type: 'OPEN', data: ['', ''] })}>
+        Open Multiple
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [''] })}>
+        Open Exists
+      </Button>
+      <Button onClick={() => send({ type: 'OPEN', data: [] })}>
+        Open Empty
+      </Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        onBack={() => send('BACK')}
+        onView={() => send('VIEW')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+</CodeSurferLayout>
+
+---
+
+<AppWithMachine />
