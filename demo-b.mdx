@@ -48,7 +48,7 @@ export const App = () => {
 }
 ```
 
-```jsx 8:13,22 title="Differentiate View & Edit Screens 📝" subtitle="Differentiate stateValue based on 'visible' & 'editing' state"
+```jsx 8:13,24 title="Differentiate View & Edit Screens 📝" subtitle="Differentiate stateValue based on 'visible' & 'editing' state"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -67,7 +67,9 @@ export const App = () => {
     <main className="app">
       <Button onClick={() => setVisible(true)}>Open Modal</Button>
       <Modal
-        onClose={() => setVisible(false)}
+        onClose={() => {
+          setVisible(false)
+        }}
         onEdit={}
         onSubmit={}
         stateValue={stateValue}
@@ -161,7 +163,7 @@ Introducing **Hierarchical State**
 
 <CodeSurferLayout>
 
-```jsx 7:11,12:18 title="State Machine Definition ⚙️" subtitle="Introducing Hierarchical State"
+```jsx 7:11,12:17 title="State Machine Definition ⚙️" subtitle="Introducing Hierarchical State"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -320,6 +322,8 @@ export const App = () => {
       <Button onClick={() => send('OPEN')}>Open Modal</Button>
       <Modal
         onClose={() => send('CLOSE')}
+        onEdit={}
+        onSubmit={}
         stateValue={current.value === 'visible'}
       />
     </main>

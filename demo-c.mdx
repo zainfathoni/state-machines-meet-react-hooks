@@ -126,7 +126,7 @@ export const App = () => {
 }
 ```
 
-```jsx 20:29 title="Add Create Screen 🆕" subtitle="Update Buttons"
+```jsx 20:28 title="Add Create Screen 🆕" subtitle="Update Buttons"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -154,7 +154,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -173,7 +172,7 @@ export const App = () => {
 }
 ```
 
-```jsx 34,40 title="Add Create Screen 🆕" subtitle="Update Event Propagations"
+```jsx 33,39 title="Add Create Screen 🆕" subtitle="Update Event Propagations"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -201,7 +200,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -222,7 +220,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7,10,14:16,20:29,34,40 title="Add Create Screen 🆕"
+```jsx 7,10,14:16,20:29,33,39 title="Add Create Screen 🆕"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -250,7 +248,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -285,7 +282,7 @@ Introducing **Guards**
 
 <CodeSurferLayout>
 
-```jsx 5:30 title="State Machine Definition ⚙️"
+```jsx 5:31 title="State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({

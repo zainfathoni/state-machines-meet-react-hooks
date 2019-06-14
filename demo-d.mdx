@@ -15,13 +15,9 @@ Show `list` screen when opening modal with _multiple_ data
 
 ---
 
-TODO:
-
----
-
 <CodeSurferLayout>
 
-```jsx 7:45 title="Add List Screen 🗒"
+```jsx 7:44 title="Add List Screen 🗒"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -49,7 +45,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -99,7 +94,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -156,7 +150,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -177,7 +170,7 @@ export const App = () => {
 }
 ```
 
-```jsx 29:36 title="Add List Screen 🗒" subtitle="Update Buttons"
+```jsx 28:35 title="Add List Screen 🗒" subtitle="Update Buttons"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -213,7 +206,6 @@ export const App = () => {
       >
         Open Multiple
       </Button>
-      &nbsp;
       <Button
         onClick={() => {
           setVisible(true)
@@ -222,7 +214,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -243,7 +234,7 @@ export const App = () => {
 }
 ```
 
-```jsx 58,60:61 title="Add List Screen 🗒" subtitle="Update Event Propagations"
+```jsx 56,58:59 title="Add List Screen 🗒" subtitle="Update Event Propagations"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -279,7 +270,6 @@ export const App = () => {
       >
         Open Multiple
       </Button>
-      &nbsp;
       <Button
         onClick={() => {
           setVisible(true)
@@ -288,7 +278,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -312,7 +301,7 @@ export const App = () => {
 }
 ```
 
-```jsx 8,11:18,29:36,58,60:61 title="Add List Screen 🗒"
+```jsx 8,11:18,29:36,56,58:59 title="Add List Screen 🗒"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -348,7 +337,6 @@ export const App = () => {
       >
         Open Multiple
       </Button>
-      &nbsp;
       <Button
         onClick={() => {
           setVisible(true)
@@ -357,7 +345,6 @@ export const App = () => {
       >
         Open Exists
       </Button>
-      &nbsp;
       <Button onClick={() => setVisible(true)}>Open Empty</Button>
       <Modal
         onClose={() => {
@@ -873,7 +860,7 @@ export const App = () => {
 }
 ```
 
-```jsx 23:24 title="App with State Machine 🛠" subtitle="Simply send 'VIEW' & 'BACK' events"
+```jsx 24:25 title="App with State Machine 🛠" subtitle="Simply send 'BACK' & 'VIEW' events"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
