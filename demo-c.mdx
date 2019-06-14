@@ -52,7 +52,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7 title="3️⃣ Add Create Screen 🆕" subtitle="3️⃣ Add 'data' useState"
+```jsx 7 title="3️⃣ Add Create Screen 🆕" subtitle="Add 'data' useState"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -88,7 +88,7 @@ export const App = () => {
 }
 ```
 
-```jsx 10,14:16 title="3️⃣ Add Create Screen 🆕" subtitle="3️⃣ Incorporate 'data' state into the stateValue determination"
+```jsx 10,14:16 title="3️⃣ Add Create Screen 🆕" subtitle="Incorporate 'data' state into the stateValue determination"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -126,7 +126,7 @@ export const App = () => {
 }
 ```
 
-```jsx 20:28 title="3️⃣ Add Create Screen 🆕" subtitle="3️⃣ Update Buttons"
+```jsx 20:28 title="3️⃣ Add Create Screen 🆕" subtitle="Update Buttons"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -172,7 +172,7 @@ export const App = () => {
 }
 ```
 
-```jsx 33,39 title="3️⃣ Add Create Screen 🆕" subtitle="3️⃣ Update Event Propagations"
+```jsx 33,39 title="3️⃣ Add Create Screen 🆕" subtitle="Update Event Propagations"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -317,7 +317,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 10 title="3️⃣ State Machine Definition ⚙️" subtitle="3️⃣ This is a transition"
+```jsx 10 title="3️⃣ State Machine Definition ⚙️" subtitle="This is a transition"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -352,7 +352,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 10 title="3️⃣ State Machine Definition ⚙️" subtitle="3️⃣ Transition can be defined as an object"
+```jsx 10 title="3️⃣ State Machine Definition ⚙️" subtitle="Transition can be defined as an object"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -387,7 +387,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 10:13 title="3️⃣ State Machine Definition ⚙️" subtitle="3️⃣ as well as an array"
+```jsx 10:13 title="3️⃣ State Machine Definition ⚙️" subtitle="as well as an array"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -425,7 +425,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 11:13 title="3️⃣ State Machine Definition ⚙️" subtitle="3️⃣ How do we target different states from a same event?"
+```jsx 11:13 title="3️⃣ State Machine Definition ⚙️" subtitle="How do we target different states from a same event?"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -465,7 +465,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 12:13 title="3️⃣ State Machine Definition ⚙️" subtitle="3️⃣ By providing a condition, it's called a Guard"
+```jsx 12:13 title="3️⃣ State Machine Definition ⚙️" subtitle="By providing a condition, it's called a Guard"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -507,7 +507,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 36:40 title="3️⃣ State Machine Definition ⚙️" subtitle="3️⃣ Define another 'create' state"
+```jsx 36:40 title="3️⃣ State Machine Definition ⚙️" subtitle="Define another 'create' state"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -643,7 +643,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11 title="3️⃣ App with State Machine 🛠" subtitle="3️⃣ Let's rename the current button"
+```jsx 11 title="3️⃣ App with State Machine 🛠" subtitle="Let's rename the current button"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -666,7 +666,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:13 title="3️⃣ App with State Machine 🛠" subtitle="3️⃣ Event can be defined as an object with a type and payloads"
+```jsx 11:13 title="3️⃣ App with State Machine 🛠" subtitle="Event can be defined as an object with a type and payloads"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -691,7 +691,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:13 title="3️⃣ App with State Machine 🛠" subtitle="3️⃣ Add another button which sends the same event but different payloads"
+```jsx 11:13 title="3️⃣ App with State Machine 🛠" subtitle="Add another button which sends the same event but different payloads"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -719,7 +719,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:16 title="3️⃣ App with State Machine 🛠" subtitle="3️⃣ That's it!"
+```jsx 11:16 title="3️⃣ App with State Machine 🛠" subtitle="That's it!"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
