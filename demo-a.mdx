@@ -15,7 +15,7 @@ import { CodeSurferLayout } from 'code-surfer'
 
 <CodeSurferLayout>
 
-```jsx title="Toggle Modal Visibility 👀"
+```jsx title="1️⃣ Toggle Modal Visibility 👀"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -29,7 +29,7 @@ export const App = () => {
 }
 ```
 
-```jsx 5 title="Toggle Modal Visibility 👀" subtitle="Add 'visible' useState"
+```jsx 5 title="1️⃣ Toggle Modal Visibility 👀" subtitle="Add 'visible' useState"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -45,7 +45,7 @@ export const App = () => {
 }
 ```
 
-```jsx 9 title="Toggle Modal Visibility 👀" subtitle="setVisible 👀 on Button click"
+```jsx 9 title="1️⃣ Toggle Modal Visibility 👀" subtitle="setVisible 👀 on Button click"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -61,7 +61,7 @@ export const App = () => {
 }
 ```
 
-```jsx 10 title="Toggle Modal Visibility 👀" subtitle="setVisible to false 🙈 on Modal close"
+```jsx 10 title=""1️⃣ Toggle Modal Visibility 👀" subtitle="setVisible to false 🙈 on Modal close"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -77,7 +77,7 @@ export const App = () => {
 }
 ```
 
-```jsx 5,9:10 title="Toggle Modal Visibility 👀"
+```jsx 5,9:10 title="1️⃣ Toggle Modal Visibility 👀"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -97,6 +97,10 @@ export const App = () => {
 
 ---
 
+# :smile:
+
+---
+
 ## Toggle Modal Visibility 👀
 
 ### with State Machine
@@ -105,7 +109,7 @@ export const App = () => {
 
 <CodeSurferLayout>
 
-```jsx title="State Machine Definition ⚙️"
+```jsx title="1️⃣ State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -116,7 +120,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 5 title="State Machine Definition ⚙️" subtitle="inital 'invisible' 🙈 state"
+```jsx 5 title="1️⃣ State Machine Definition ⚙️" subtitle="inital 'invisible' 🙈 state"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -128,7 +132,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 7:11 title="State Machine Definition ⚙️" subtitle="'invisible' 🙈 state with 'OPEN' event"
+```jsx 7:11 title="1️⃣ State Machine Definition ⚙️" subtitle="'invisible' 🙈 state with 'OPEN' event"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -144,7 +148,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 12:16 title="State Machine Definition ⚙️" subtitle="'visible' 👀 state with 'CLOSE' event"
+```jsx 12:16 title="1️⃣ State Machine Definition ⚙️" subtitle="'visible' 👀 state with 'CLOSE' event"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -165,7 +169,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 5,7:11,12:16 title="State Machine Definition ⚙️"
+```jsx 5,7:11,12:16 title="1️⃣ State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -205,7 +209,7 @@ export const modalMachine = Machine({
 
 <CodeSurferLayout>
 
-```jsx title="App with State Machine 🛠"
+```jsx title="1️⃣ App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -221,7 +225,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7 title="App with State Machine 🛠" subtitle="useMachine with the modalMachine"
+```jsx 7 title="1️⃣ App with State Machine 🛠" subtitle="useMachine with the modalMachine"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -239,7 +243,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11 title="App with State Machine 🛠" subtitle="send 'OPEN' event on Button click"
+```jsx 11 title="1️⃣ App with State Machine 🛠" subtitle="send 'OPEN' event on Button click"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -257,7 +261,7 @@ export const App = () => {
 }
 ```
 
-```jsx 13 title="App with State Machine 🛠" subtitle="send 'CLOSE' event on Modal close"
+```jsx 13 title="1️⃣ App with State Machine 🛠" subtitle="send 'CLOSE' event on Modal close"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -278,7 +282,7 @@ export const App = () => {
 }
 ```
 
-```jsx 14 title="App with State Machine 🛠" subtitle="Pass down current state value as the visibility props"
+```jsx 14 title="1️⃣ App with State Machine 🛠" subtitle="Pass down current state value as the visibility props"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -299,7 +303,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7,11,13,14 title="App with State Machine 🛠"
+```jsx 7,11,13,14 title="1️⃣ App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
