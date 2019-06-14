@@ -266,57 +266,6 @@ export const App = () => {
 }
 ```
 
-```jsx 11:45 title="App" subtitle="Replace multiple useState with useMachine"
-import React from 'react'
-import { Button, Modal } from '../shared/Components'
-import { useMachine } from '../shared/useMachine'
-import { modalMachine } from './machine'
-
-export const App = () => {
-  const [current, send] = useMachine(modalMachine, { devTools: true })
-
-  return (
-    <main className="app">
-      <Button
-        onClick={() => {
-          setVisible(true)
-          setData(['', ''])
-        }}
-      >
-        Open Multiple
-      </Button>
-      <Button
-        onClick={() => {
-          setVisible(true)
-          setData([''])
-        }}
-      >
-        Open Exists
-      </Button>
-      <Button onClick={() => setVisible(true)}>Open Empty</Button>
-      <Modal
-        onClose={() => {
-          setVisible(false)
-          setEditing(false)
-          setData([])
-          setIndex(-1)
-        }}
-        onEdit={() => setEditing(true)}
-        onSubmit={() => {
-          setVisible(false)
-          setEditing(false)
-          setData([])
-          setIndex(-1)
-        }}
-        onBack={() => setIndex(-1)}
-        onView={() => setIndex(0)}
-        stateValue={stateValue}
-      />
-    </main>
-  )
-}
-```
-
 ```jsx 11:45 title="App" subtitle="Replace implicit setState calls into explicit events"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
@@ -350,6 +299,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {

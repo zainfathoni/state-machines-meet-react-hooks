@@ -434,6 +434,56 @@ export const modalMachine = Machine(
 )
 ```
 
+```jsx 12:17 title="4️⃣ State Machine Definition ⚙️" subtitle="We have 2 transitions here"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: (context, event) =>
+                !event.data || (event.data && event.data.length === 0),
+              target: 'visible.create',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  }
+  //
+)
+```
+
 ```jsx 17:20 title="4️⃣ State Machine Definition ⚙️" subtitle="Add a new guard for single data"
 import { Machine } from 'xstate'
 

@@ -654,6 +654,29 @@ export const App = () => {
 
   return (
     <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={() => send('EDIT')}
+        onSubmit={() => send('SUBMIT')}
+        stateValue={current.value.visible}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 11 title="3️⃣ App with State Machine 🛠" subtitle="Name it as an Empty Button"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
       <Button onClick={() => send('OPEN')}>Open Empty</Button>
       <Modal
         onClose={() => send('CLOSE')}
