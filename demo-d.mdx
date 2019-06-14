@@ -17,7 +17,7 @@ Show `list` screen when opening modal with _multiple_ data
 
 <CodeSurferLayout>
 
-```jsx 7:44 title="Add List Screen 🗒"
+```jsx 7:44 title="4️⃣ Add List Screen 🗒"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -65,7 +65,7 @@ export const App = () => {
 }
 ```
 
-```jsx 8 title="Add List Screen 🗒" subtitle="Add 'index' useState"
+```jsx 8 title="4️⃣ Add List Screen 🗒" subtitle="4️⃣ Add 'index' useState"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -114,7 +114,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:18 title="Add List Screen 🗒" subtitle="Incorporate 'index' state into the stateValue determination"
+```jsx 11:18 title="4️⃣ Add List Screen 🗒" subtitle="4️⃣ Incorporate 'index' state into the stateValue determination"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -170,7 +170,7 @@ export const App = () => {
 }
 ```
 
-```jsx 28:35 title="Add List Screen 🗒" subtitle="Update Buttons"
+```jsx 28:35 title="4️⃣ Add List Screen 🗒" subtitle="4️⃣ Update Buttons"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -234,7 +234,7 @@ export const App = () => {
 }
 ```
 
-```jsx 56,58:59 title="Add List Screen 🗒" subtitle="Update Event Propagations"
+```jsx 56,58:59 title="4️⃣ Add List Screen 🗒" subtitle="4️⃣ Update Event Propagations"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -301,7 +301,7 @@ export const App = () => {
 }
 ```
 
-```jsx 8,11:18,29:36,56,58:59 title="Add List Screen 🗒"
+```jsx 8,11:18,29:36,56,58:59 title="4️⃣ Add List Screen 🗒"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -382,7 +382,7 @@ Introducing **Guards Aliasing**
 
 <CodeSurferLayout>
 
-```jsx 4:45 title="State Machine Definition ⚙️"
+```jsx 4:45 title="4️⃣ State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine(
@@ -432,61 +432,7 @@ export const modalMachine = Machine(
 )
 ```
 
-```jsx 17:20 title="State Machine Definition ⚙️" subtitle="Add a new guard for single data"
-import { Machine } from 'xstate'
-
-export const modalMachine = Machine(
-  {
-    id: 'listView',
-    initial: 'invisible',
-    states: {
-      invisible: {
-        id: 'invisible',
-        on: {
-          OPEN: [
-            {
-              cond: (context, event) =>
-                !event.data || (event.data && event.data.length === 0),
-              target: 'visible.create',
-            },
-            {
-              cond: (context, event) => event.data && event.data.length === 1
-              target: 'visible.view',
-            },
-            { target: 'visible' },
-          ],
-        },
-      },
-      visible: {
-        on: {
-          CLOSE: 'invisible',
-        },
-        initial: 'view',
-        states: {
-          view: {
-            on: {
-              EDIT: 'edit',
-            },
-          },
-          edit: {
-            on: {
-              SUBMIT: '#invisible',
-            },
-          },
-          create: {
-            on: {
-              SUBMIT: '#invisible',
-            },
-          },
-        },
-      },
-    },
-  }
-  //
-)
-```
-
-```jsx 13:14,18 title="State Machine Definition ⚙️" subtitle="Now it gets harder to read"
+```jsx 17:20 title="4️⃣ State Machine Definition ⚙️" subtitle="4️⃣ Add a new guard for single data"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine(
@@ -540,7 +486,61 @@ export const modalMachine = Machine(
 )
 ```
 
-```jsx 13,17 title="State Machine Definition ⚙️" subtitle="Alias the conditions to increase readability"
+```jsx 13:14,18 title="4️⃣ State Machine Definition ⚙️" subtitle="4️⃣ Now it gets harder to read"
+import { Machine } from 'xstate'
+
+export const modalMachine = Machine(
+  {
+    id: 'listView',
+    initial: 'invisible',
+    states: {
+      invisible: {
+        id: 'invisible',
+        on: {
+          OPEN: [
+            {
+              cond: (context, event) =>
+                !event.data || (event.data && event.data.length === 0),
+              target: 'visible.create',
+            },
+            {
+              cond: (context, event) => event.data && event.data.length === 1
+              target: 'visible.view',
+            },
+            { target: 'visible' },
+          ],
+        },
+      },
+      visible: {
+        on: {
+          CLOSE: 'invisible',
+        },
+        initial: 'view',
+        states: {
+          view: {
+            on: {
+              EDIT: 'edit',
+            },
+          },
+          edit: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+          create: {
+            on: {
+              SUBMIT: '#invisible',
+            },
+          },
+        },
+      },
+    },
+  }
+  //
+)
+```
+
+```jsx 13,17 title="4️⃣ State Machine Definition ⚙️" subtitle="4️⃣ Alias the conditions to increase readability"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine(
@@ -593,7 +593,7 @@ export const modalMachine = Machine(
 )
 ```
 
-```jsx 49:55 title="State Machine Definition ⚙️" subtitle="Define the guards at the second argument"
+```jsx 49:55 title="4️⃣ State Machine Definition ⚙️" subtitle="4️⃣ Define the guards at the second argument"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine(
@@ -652,7 +652,7 @@ export const modalMachine = Machine(
 )
 ```
 
-```jsx 28,30:34,38 title="State Machine Definition ⚙️" subtitle="Define another 'list' state"
+```jsx 28,30:34,38 title="4️⃣ State Machine Definition ⚙️" subtitle="4️⃣ Define another 'list' state"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine(
@@ -717,7 +717,7 @@ export const modalMachine = Machine(
 )
 ```
 
-```jsx 13,16:19,30:34,38,55:61 title="State Machine Definition ⚙️"
+```jsx 13,16:19,30:34,38,55:61 title="4️⃣ State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine(
@@ -801,7 +801,7 @@ export const modalMachine = Machine(
 
 <CodeSurferLayout>
 
-```jsx title="App with State Machine 🛠"
+```jsx title="4️⃣ App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -829,7 +829,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:13 title="App with State Machine 🛠" subtitle="Add another button for multiple data"
+```jsx 11:13 title="4️⃣ App with State Machine 🛠" subtitle="4️⃣ Add another button for multiple data"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -860,7 +860,7 @@ export const App = () => {
 }
 ```
 
-```jsx 24:25 title="App with State Machine 🛠" subtitle="Simply send 'BACK' & 'VIEW' events"
+```jsx 24:25 title="4️⃣ App with State Machine 🛠" subtitle="4️⃣ Simply send 'BACK' & 'VIEW' events"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -893,7 +893,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:13,23:24 title="App with State Machine 🛠" subtitle="That's it!"
+```jsx 11:13,23:24 title="4️⃣ App with State Machine 🛠" subtitle="4️⃣ That's it!"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
