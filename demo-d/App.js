@@ -49,6 +49,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {

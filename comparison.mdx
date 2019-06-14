@@ -57,6 +57,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -126,6 +127,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -195,6 +197,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -245,6 +248,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -262,7 +266,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:44 title="App" subtitle="Replace multiple useState with useMachine"
+```jsx 11:45 title="App" subtitle="Replace multiple useState with useMachine"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -295,6 +299,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -312,7 +317,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:44 title="App" subtitle="Replace implicit setState calls into explicit events"
+```jsx 11:45 title="App" subtitle="Replace implicit setState calls into explicit events"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'

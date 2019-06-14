@@ -234,7 +234,7 @@ export const App = () => {
 }
 ```
 
-```jsx 56,58:59 title="4️⃣ Add List Screen 🗒" subtitle="4️⃣ Update Event Propagations"
+```jsx 50,57,59:60 title="4️⃣ Add List Screen 🗒" subtitle="4️⃣ Update Event Propagations"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -284,6 +284,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -301,7 +302,7 @@ export const App = () => {
 }
 ```
 
-```jsx 8,11:18,29:36,56,58:59 title="4️⃣ Add List Screen 🗒"
+```jsx 8,11:18,29:36,50,57,59:60 title="4️⃣ Add List Screen 🗒"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -351,6 +352,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -557,7 +559,7 @@ export const modalMachine = Machine(
               target: 'visible.create',
             },
             {
-              cond: 'single'
+              cond: 'single',
               target: 'visible.view',
             },
             { target: 'visible' },
@@ -610,7 +612,7 @@ export const modalMachine = Machine(
               target: 'visible.create',
             },
             {
-              cond: 'single'
+              cond: 'single',
               target: 'visible.view',
             },
             { target: 'visible' },
@@ -646,8 +648,8 @@ export const modalMachine = Machine(
     guards: {
       empty: (context, event) =>
         !event.data || (event.data && event.data.length === 0),
-      single: (context, event) => event.data && event.data.length === 1
-    }
+      single: (context, event) => event.data && event.data.length === 1,
+    },
   }
 )
 ```
@@ -669,7 +671,7 @@ export const modalMachine = Machine(
               target: 'visible.create',
             },
             {
-              cond: 'single'
+              cond: 'single',
               target: 'visible.view',
             },
             { target: 'visible' },
@@ -684,14 +686,14 @@ export const modalMachine = Machine(
         states: {
           list: {
             on: {
-              VIEW: 'view'
-            }
+              VIEW: 'view',
+            },
           },
           view: {
             on: {
               EDIT: 'edit',
-              BACK: 'list'
-            }
+              BACK: 'list',
+            },
           },
           edit: {
             on: {
@@ -711,8 +713,8 @@ export const modalMachine = Machine(
     guards: {
       empty: (context, event) =>
         !event.data || (event.data && event.data.length === 0),
-      single: (context, event) => event.data && event.data.length === 1
-    }
+      single: (context, event) => event.data && event.data.length === 1,
+    },
   }
 )
 ```
@@ -893,7 +895,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:13,23:24 title="4️⃣ App with State Machine 🛠" subtitle="4️⃣ That's it!"
+```jsx 11:13,24:25 title="4️⃣ App with State Machine 🛠" subtitle="4️⃣ That's it!"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
