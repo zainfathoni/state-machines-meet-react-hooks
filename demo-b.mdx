@@ -15,7 +15,7 @@ import { CodeSurferLayout } from 'code-surfer'
 
 <CodeSurferLayout>
 
-```jsx 5,9:10 title="Differentiate View & Edit Screens 📝"
+```jsx 5,9:10 title="2️⃣ Differentiate View & Edit Screens 📝"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -31,7 +31,7 @@ export const App = () => {
 }
 ```
 
-```jsx 6 title="Differentiate View & Edit Screens 📝" subtitle="Add 'editing' useState"
+```jsx 6 title="2️⃣ Differentiate View & Edit Screens 📝" subtitle="Add 'editing' useState"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -48,7 +48,7 @@ export const App = () => {
 }
 ```
 
-```jsx 8:13,24 title="Differentiate View & Edit Screens 📝" subtitle="Differentiate stateValue based on 'visible' & 'editing' state"
+```jsx 8:13,24 title="2️⃣ Differentiate View & Edit Screens 📝" subtitle="Derive stateValue based on 'visible' & 'editing' state"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -79,7 +79,7 @@ export const App = () => {
 }
 ```
 
-```jsx 21,23,24:27 title="Differentiate View & Edit Screens 📝" subtitle="Propagate events to the corresponding state changes"
+```jsx 21,23,24:27 title="2️⃣ Differentiate View & Edit Screens 📝" subtitle="Propagate events to the corresponding state changes"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -114,7 +114,7 @@ export const App = () => {
 }
 ```
 
-```jsx 6,8:13,21,23,24:27,28 title="Differentiate View & Edit Screens 📝"
+```jsx 6,8:13,21,23,24:27,28 title="2️⃣ Differentiate View & Edit Screens 📝"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -163,7 +163,7 @@ Introducing **Hierarchical State**
 
 <CodeSurferLayout>
 
-```jsx 7:11,12:17 title="State Machine Definition ⚙️" subtitle="Introducing Hierarchical State"
+```jsx 7:11,12:17 title="2️⃣ State Machine Definition ⚙️" subtitle="Introducing Hierarchical State"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -185,7 +185,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 16:28 title="State Machine Definition ⚙️" subtitle="Add states inside 'visible' state"
+```jsx 16:28 title="2️⃣ State Machine Definition ⚙️" subtitle="Add states inside 'visible' state"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -219,7 +219,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 8,26 title="State Machine Definition ⚙️" subtitle="Target parent state by using #id"
+```jsx 8,26 title="2️⃣ State Machine Definition ⚙️" subtitle="Target parent state by using #id"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -254,7 +254,7 @@ export const modalMachine = Machine({
 })
 ```
 
-```jsx 8,17:29 title="State Machine Definition ⚙️"
+```jsx 8,17:29 title="2️⃣ State Machine Definition ⚙️"
 import { Machine } from 'xstate'
 
 export const modalMachine = Machine({
@@ -308,7 +308,7 @@ export const modalMachine = Machine({
 
 <CodeSurferLayout>
 
-```jsx title="App with State Machine 🛠"
+```jsx title="2️⃣ App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -331,7 +331,30 @@ export const App = () => {
 }
 ```
 
-```jsx 16 title="App with State Machine 🛠" subtitle="Pass down 'visible' substates as the stateValue"
+```jsx 16 title="2️⃣ App with State Machine 🛠" subtitle="We need to change the value that we're passing"
+import React from 'react'
+import { Button, Modal } from '../shared/Components'
+import { useMachine } from '../shared/useMachine'
+import { modalMachine } from './machine'
+
+export const App = () => {
+  const [current, send] = useMachine(modalMachine, { devTools: true })
+
+  return (
+    <main className="app">
+      <Button onClick={() => send('OPEN')}>Open Modal</Button>
+      <Modal
+        onClose={() => send('CLOSE')}
+        onEdit={}
+        onSubmit={}
+        stateValue={current.value === 'visible'}
+      />
+    </main>
+  )
+}
+```
+
+```jsx 16 title="2️⃣ App with State Machine 🛠" subtitle="Pass down 'visible' substates as the stateValue"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -354,7 +377,7 @@ export const App = () => {
 }
 ```
 
-```jsx 14:15 title="App with State Machine 🛠" subtitle="Simply send 'EDIT' & 'SUBMIT' events"
+```jsx 14:15 title="2️⃣ App with State Machine 🛠" subtitle="Simply send 'EDIT' & 'SUBMIT' events"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -377,7 +400,7 @@ export const App = () => {
 }
 ```
 
-```jsx 7,14:15,16 title="App with State Machine 🛠"
+```jsx 7,14:15,16 title="2️⃣ App with State Machine 🛠"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'

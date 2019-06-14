@@ -2,6 +2,10 @@ import { Appear, Image, Notes } from 'mdx-deck'
 
 # [State Machines](https://xstate.js.org/) Meet [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 
+## JSConf Asia 2019
+
+[@zainfathoni](https://twitter.com/zainfathoni)
+
 ---
 
 # I am [Zain Fathoni](https://github.com/zainfathoni) 🤝
@@ -14,9 +18,6 @@ import { Appear, Image, Notes } from 'mdx-deck'
     </li>
     <li>Backend turned Frontend 👨🏻‍💻</li>
     <li>❤️ React & its Hooks ⚛️</li>
-    <li>
-      <a href="https://twitter.com/zainfathoni">@zainfathoni</a> on Twitter
-    </li>
   </Appear>
 </ul>
 
@@ -28,18 +29,15 @@ import { Appear, Image, Notes } from 'mdx-deck'
 - A small replica of my personal journey with:
   - State Machines, especially [xstate](https://xstate.js.org/) in particular
   - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
-- **How** to combine them together
+- How to combine them together
+  - **A LOT** of code, buckle up!
 
 ---
 
 # What this talk is _not_ 😅
 
-<ul>
-  <Appear>
-    <li>An introduction to React Hooks</li>
-    <li>A deep dig down of State Machines concepts</li>
-  </Appear>
-</ul>
+- An introduction to React Hooks
+- A deep dig down of State Machines concepts
 
 <Notes>
   <ul>
@@ -54,19 +52,6 @@ import { Appear, Image, Notes } from 'mdx-deck'
     </li>
   </ul>
 </Notes>
-
----
-
-# Problem Statement
-
-<ul>
-  <Appear>
-    <li>Complex UI flows require multiple states</li>
-    <li>Multiple states are generally too implicit</li>
-    <li>Implicit codes are harder to reason about</li>
-    <li>Hidden bugs everywhere due to "invisible states"</li>
-  </Appear>
-</ul>
 
 ---
 
@@ -87,7 +72,6 @@ import { Appear, Image, Notes } from 'mdx-deck'
         Why?
       </a>
       <ul>
-        <li>Predictable</li>
         <li>
           <a
             href="http://slides.com/davidkhourshid/finite-state-machines#/22"
@@ -103,7 +87,46 @@ import { Appear, Image, Notes } from 'mdx-deck'
 
 ---
 
-<Image src={require('file-loader!./images/designers-flow-diagram.png')} />
+## I got a lot of these from my designer 🤯
+
+<Image
+  src={require('file-loader!./images/designers-flow-diagram.png')}
+  alt="Flow Diagram example"
+  style={{ margin: 'auto', height: '70vh', backgroundSize: 'contain' }}
+/>
+
+---
+
+#### State Machines provide a common language for designers & developers 😍
+
+<Image
+  src={require('file-loader!./images/user-flow.gif')}
+  style={{
+    margin: 'auto',
+    height: '70vh',
+    backgroundSize: 'contain',
+  }}
+/>
+
+<small>
+  Source:{' '}
+  <a href="https://dribbble.com/shots/1871910-User-Flow-Part-1">
+    https://dribbble.com/shots/1871910-User-Flow-Part-1
+  </a>
+</small>
+
+---
+
+# Problem Statement 🤯
+
+<ul>
+  <Appear>
+    <li>Complex UI flows require multiple states</li>
+    <li>Multiple states are generally too implicit</li>
+    <li>Implicit codes are harder to reason about</li>
+    <li>This causes hidden bugs everywhere due to "invisible states"</li>
+  </Appear>
+</ul>
 
 ---
 
@@ -113,12 +136,12 @@ import { Appear, Image, Notes } from 'mdx-deck'
 
 ---
 
-# Hypothesis
+# Hypothesis 🤔
 
 <ul>
   <Appear>
-    <li>State machines make all states are visible</li>
-    <li>No invisible states means no hidden bugs</li>
+    <li>State machines make all states are visible 👀</li>
+    <li>No invisible states means no hidden bugs 🤞</li>
   </Appear>
 </ul>
 

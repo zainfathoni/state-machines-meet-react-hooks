@@ -1,13 +1,16 @@
 import { Image } from '@mdx-deck/components'
 import { CodeSurferLayout } from 'code-surfer'
 
-# Comparison
+# Comparison ♽
+
+- Conventional implementation ⚛️
+- State Machine implementation ⚙️
 
 ---
 
 <CodeSurferLayout>
 
-```jsx 1 title="App without State Machine"
+```jsx 1 title="App without State Machine ⚛️"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -57,6 +60,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -126,6 +130,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -195,6 +200,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -245,6 +251,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
+          setIndex(-1)
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -262,7 +269,7 @@ export const App = () => {
 }
 ```
 
-```jsx 11:44 title="App" subtitle="Replace multiple useState with useMachine"
+```jsx 11:45 title="App" subtitle="Replace implicit setState calls into explicit events"
 import React from 'react'
 import { Button, Modal } from '../shared/Components'
 import { useMachine } from '../shared/useMachine'
@@ -295,56 +302,7 @@ export const App = () => {
           setVisible(false)
           setEditing(false)
           setData([])
-        }}
-        onEdit={() => setEditing(true)}
-        onSubmit={() => {
-          setVisible(false)
-          setEditing(false)
-          setData([])
           setIndex(-1)
-        }}
-        onBack={() => setIndex(-1)}
-        onView={() => setIndex(0)}
-        stateValue={stateValue}
-      />
-    </main>
-  )
-}
-```
-
-```jsx 11:44 title="App" subtitle="Replace implicit setState calls into explicit events"
-import React from 'react'
-import { Button, Modal } from '../shared/Components'
-import { useMachine } from '../shared/useMachine'
-import { modalMachine } from './machine'
-
-export const App = () => {
-  const [current, send] = useMachine(modalMachine, { devTools: true })
-
-  return (
-    <main className="app">
-      <Button
-        onClick={() => {
-          setVisible(true)
-          setData(['', ''])
-        }}
-      >
-        Open Multiple
-      </Button>
-      <Button
-        onClick={() => {
-          setVisible(true)
-          setData([''])
-        }}
-      >
-        Open Exists
-      </Button>
-      <Button onClick={() => setVisible(true)}>Open Empty</Button>
-      <Modal
-        onClose={() => {
-          setVisible(false)
-          setEditing(false)
-          setData([])
         }}
         onEdit={() => setEditing(true)}
         onSubmit={() => {
@@ -432,4 +390,8 @@ export const App = () => {
 
 ---
 
-<AppWithMachine />
+# What about the Machine? ⚙️
+
+- Isn't it still complex? Yes.
+- But it can be [visualized](https://statecharts.github.io/xstate-viz/) easily.
+- Visualization reduces cognitive overload
