@@ -1,13 +1,16 @@
 import { Image } from '@mdx-deck/components'
 import { CodeSurferLayout } from 'code-surfer'
 
-# Comparison
+# Comparison ♽
+
+- Conventional implementation ⚛️
+- State Machine implementation ⚙️
 
 ---
 
 <CodeSurferLayout>
 
-```jsx 1 title="App without State Machine"
+```jsx 1 title="App without State Machine ⚛️"
 import React, { useState } from 'react'
 import { Button, Modal } from '../shared/Components'
 
@@ -387,4 +390,8 @@ export const App = () => {
 
 ---
 
-<AppWithMachine />
+# What about the Machine? ⚙️
+
+- Isn't it still complex? Yes.
+- But it can be [visualized](https://statecharts.github.io/xstate-viz/) easily.
+- Visualization reduces cognitive overload
